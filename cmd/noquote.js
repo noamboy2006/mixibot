@@ -1,8 +1,8 @@
 module.exports = {
   name: '',
-  isValid: (msg) => {
+  isValid: (msg, client) => {
     return 0
   },
-  exec: (msg) => {
+  exec: (msg, client) => {
   }
 }

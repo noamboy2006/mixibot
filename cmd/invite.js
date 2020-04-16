@@ -2,10 +2,10 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = {
   name: 'invite',
-  isValid: (msg) => {
+  isValid: (msg, client) => {
     return 0
   },
-  exec: (msg) => {
+  exec: (msg, client) => {
     const embed = new MessageEmbed()
       .setTitle('믹시봇 초대링크')
       .setColor('#1e90ff')

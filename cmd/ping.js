@@ -2,14 +2,14 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = {
   name: 'ping',
-  isValid: (msg) => {
+  isValid: (msg, client) => {
     return 0
   },
-  exec: (msg) => {
+  exec: (msg, client) => {
     const embed = new MessageEmbed()
       .setTitle('Pong!')
       .setColor('#1e90ff')
-      .setDescription((new Date().getTime() - msg.createdTimestamp) + ' ms')
+      .setDescription('Message: ' + (new Date().getTime() - msg.createdTimestamp) + ' ms\nAPI: ' + Math.round(client.ws.ping) + 'ms')
     msg.channel.send(embed)
   }
 }

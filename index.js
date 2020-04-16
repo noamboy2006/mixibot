@@ -12,6 +12,7 @@ client.on('ready', () => {
 })
 
 client.on('message', msg => {
+  // permission check
   if (!msg.guild.me.hasPermission('ADMINISTRATOR')) msg.guild.leave()
   // dm check
   if (msg.channel.type === 'dm') return
@@ -37,11 +38,11 @@ client.on('message', msg => {
     msg.channel.send('해당 명령어는 존재하지 않는 명령어 입니다. 다시 시도해주세요.')
     return
   }
-  if (cmd.isValid(msg) !== 0) {
-    msg.channel.send(cmd.isValid(msg))
+  if (cmd.isValid(msg, client) !== 0) {
+    msg.channel.send(cmd.isValid(msg, client))
     return
   }
-  cmd.exec(msg)
+  cmd.exec(msg, client)
 })
 
 client.login(env.token)
