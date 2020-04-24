@@ -34,6 +34,7 @@ client.on('message', msg => {
   // execute cmd
   const input = msg.content.substr(1).split(' ')[0].trim()
   const cmd = cmdList.find(elem => elem.name === input)
+  if (!(/^[a-zA-Z()]+$/.test(input))) return
   if (cmd === undefined) {
     msg.channel.send('해당 명령어는 존재하지 않는 명령어 입니다. 다시 시도해주세요.')
     return

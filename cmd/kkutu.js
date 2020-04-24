@@ -1,8 +1,8 @@
 const Discord = require('discord.js')
 const env = require('../env.json')
-var request = require('sync-request')
-const count = []
+const request = require('sync-request')
 const convert = require('xml-js')
+const count = []
 
 module.exports = {
   name: 'kkutu',
@@ -65,13 +65,8 @@ module.exports = {
 }
 
 function isAKoreanWordLOL (w) {
-  const options = {
-    hostname: 'stdict.korean.go.kr',
-    port: 443,
-    path: '/api/search.do?key='+env.key+'&q=' + encodeURIComponent(w),
-    method: 'GET'
-  }
-  const res = request('GET', 'https://stdict.korean.go.kr/api/search.do?key='+env.key+'&q=' + encodeURIComponent(w), {
+  if (!(/^[가-힣() ]+$/.test(w))) return 0
+  const res = request('GET', 'https://stdict.korean.go.kr/api/search.do?key=' + env.key + '&q=' + encodeURIComponent(w), {
     headers: {
       ContentType: 'text/xml'
     }
@@ -82,6 +77,27 @@ function isAKoreanWordLOL (w) {
 
 function startsWith (m, t) {
   const l = t.slice(t.length - 1)
-  if (l === '리' && m.startsWith('이')) return true
+  let cCode = l.charCodeAt(0)
+  if (cCode < 0xAC00 || cCode > 0xD7A3) return false
+  cCode -= 0xAC00
+  let cho = (((cCode - cCode % 28) / 28) - ((cCode - cCode % 28) / 28) % 21) / 21
+  if (cho === 5) {
+    cho = 11
+    cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
+    cCode += 0xAC00
+    if(m.startsWith(String.fromCharCode(cCode))) return 1
+    cCode -= 0xAC00
+    cho = 2
+    cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
+    cCode += 0xAC00
+    if(m.startsWith(String.fromCharCode(cCode))) return 1
+  }
+  if (cho === 2) {
+    cCode -= 0xAC00
+    cho = 11
+    cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
+    cCode += 0xAC00
+    if(m.startsWith(String.fromCharCode(cCode))) return 1
+  }
   return m.startsWith(l)
 }
