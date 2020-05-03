@@ -85,19 +85,19 @@ function startsWith (m, t) {
     cho = 11
     cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
     cCode += 0xAC00
-    if(m.startsWith(String.fromCharCode(cCode))) return 1
+    if (m.startsWith(String.fromCharCode(cCode))) return 1
     cCode -= 0xAC00
     cho = 2
     cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
     cCode += 0xAC00
-    if(m.startsWith(String.fromCharCode(cCode))) return 1
+    if (m.startsWith(String.fromCharCode(cCode))) return 1
   }
   if (cho === 2) {
     cCode -= 0xAC00
     cho = 11
     cCode = (((cCode - cCode % 28) / 28) % 21 + cho * 21) * 28 + cCode % 28
     cCode += 0xAC00
-    if(m.startsWith(String.fromCharCode(cCode))) return 1
+    if (m.startsWith(String.fromCharCode(cCode))) return 1
   }
   return m.startsWith(l)
 }

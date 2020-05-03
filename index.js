@@ -21,6 +21,8 @@ client.on('message', msg => {
     muted.erase(msg)
     return
   }
+  // security
+  require('./etc/securitycheck.js')(msg)
   // etc checks
   if (!msg.content.startsWith(env.prefix)) return
   if (msg.author.bot) return
