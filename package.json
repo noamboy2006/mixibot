@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/noamboy2006/mixibot#readme",
   "dependencies": {
+    "@tensorflow/tfjs": "^1.7.4",
     "discord.js": "^12.1.1",
     "request": "^2.88.2",
     "superagent-sync": "^0.2.1",
