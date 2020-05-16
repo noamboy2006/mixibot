@@ -17,15 +17,11 @@
   },
   "homepage": "https://github.com/noamboy2006/mixibot#readme",
   "dependencies": {
-    "@tensorflow/tfjs": "^1.7.4",
-    "discord.js": "^12.1.1",
-    "request": "^2.88.2",
-    "superagent-sync": "^0.2.1",
-    "sync-request": "^6.1.0",
-    "xml-js": "^1.6.11"
+    "axios": "^0.19.2",
+    "discord.js": "^12.2.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",

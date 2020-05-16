@@ -1,51 +1,37 @@
 const Discord = require('discord.js')
 const env = require('./env.json')
-const muted = require('./etc/muted.js')
 const fs = require('fs')
 
 const client = new Discord.Client()
 
+// load command
+client.categories = fs.readdirSync('./cmd')
+client.commands = []
+client.categories.forEach(c => {
+  fs.readdirSync('./cmd/' + c).forEach(n => {
+    client.commands.push(require('./cmd/' + c + '/' + n))
+  })
+})
+client.prefix = env.devMode ? env.testPrefix : env.prefix
+client.color = env.color
+
 client.on('ready', () => {
-  client.user.setActivity('>help')
-  if (env.devMode) client.user.setActivity('현재 개발모드, 명령어 사용 불가')
+  client.user.setActivity(client.prefix + 'help')
   console.log('I am ready!')
 })
 
 client.on('message', msg => {
-  // permission check
-  if (!msg.guild.me.hasPermission('ADMINISTRATOR')) msg.guild.leave()
-  // dm check
-  if (msg.channel.type === 'dm') return
-  // muted check
-  if (muted.isMuted(msg)) {
-    muted.erase(msg)
-    return
-  }
-  // security
-  require('./etc/securitycheck.js')(msg)
-  // etc checks
-  if (!msg.content.startsWith(env.prefix)) return
+  // check
   if (msg.author.bot) return
-  if (env.devMode && !(env.devs.includes(msg.author.id))) return
-  // get cmd infos
-  const cmdList = []
-  fs.readdirSync('./cmd', 'utf-8').forEach((fileName) => {
-    const cmdInfo = require('./cmd/' + fileName)
-    cmdList.push(cmdInfo)
-  })
-  // execute cmd
-  const input = msg.content.substr(1).split(' ')[0].trim()
-  const cmd = cmdList.find(elem => elem.name === input)
-  if (!(/^[a-zA-Z()]+$/.test(input))) return
+  if (!msg.guild) return
+  if (!msg.content.startsWith(client.prefix)) return
+  // find command
+  const cmd = client.commands.find(cmd => cmd.name === msg.content.substring(1).split(' ')[0])
   if (cmd === undefined) {
-    msg.channel.send('해당 명령어는 존재하지 않는 명령어 입니다. 다시 시도해주세요.')
+    msg.channel.send('command `' + msg.content.substring(1).split(' ')[0] + '` does not exist.')
     return
   }
-  if (cmd.isValid(msg, client) !== 0) {
-    msg.channel.send(cmd.isValid(msg, client))
-    return
-  }
-  cmd.exec(msg, client)
+  cmd.exec(client, msg)
 })
 
-client.login(env.token)
+if (env.devMode) { client.login(env.testToken) } else { client.login(env.token) }
