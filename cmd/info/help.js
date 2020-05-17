@@ -14,6 +14,7 @@ module.exports = {
         .setTitle(`Help for ${cmd.name}`)
         .addField('Category', cmd.category)
         .addField('Description', cmd.description)
+        .setColor(client.color)
       msg.channel.send(Embed)
     } else if (msg.content.split(' ').length === 1) {
       const Embed = new MessageEmbed()
