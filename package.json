@@ -18,7 +18,12 @@
   "homepage": "https://github.com/noamboy2006/mixibot#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "discord.js": "^12.2.0"
+    "cheerio": "^1.0.0-rc.3",
+    "discord.js": "^12.2.0",
+    "html2json": "^1.0.2",
+    "knex": "^0.21.1",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "eslint": "^7.0.0",

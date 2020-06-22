@@ -20,10 +20,24 @@ client.on('ready', () => {
   console.log('I am ready!')
 })
 
+client.on('guildCreate', guild => {
+  if (fs.readdirSync('./data').find(elem => elem === guild.id) === undefined) {
+    const data = {
+      auto: false,
+      modUsers: [guild.owner.id],
+      modRoles: []
+    }
+    fs.writeFileSync('./data/' + guild.id + '.json', JSON.stringify(data, false, 2))
+  }
+})
+
 client.on('message', msg => {
   // check
   if (msg.author.bot) return
   if (!msg.guild) return
+  // auto_moderator
+  require('./auto_moderator/index.js')(client, msg)
+  // check if command
   if (!msg.content.startsWith(client.prefix)) return
   // find command
   const cmd = client.commands.find(cmd => cmd.name === msg.content.substring(1).split(' ')[0])

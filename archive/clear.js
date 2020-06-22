@@ -22,7 +22,7 @@ module.exports = {
       msg.channel.send('the length of messages to clear must be a number.')
       return
     }
-    if(num > 99) msg.channel.bulkDelete(100, true)
+    if (num > 99) msg.channel.bulkDelete(100, true)
     msg.channel.bulkDelete(num + 1, true)
       .then((deleted) => msg.channel.send(`deleted ${deleted.size} messages.`).then((m) => m.delete({ timeout: 3000 })))
   }

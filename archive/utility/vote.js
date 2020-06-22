@@ -5,7 +5,7 @@ module.exports = {
   description: 'creates a vote. %vote %option1 %option2 ...',
   exec: async (client, msg) => {
     const alphabet = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯', '🇰', '🇱', '🇲', '🇳', '🇴', '🇵', '🇶', '🇷', '🇸', '🇹', '🇺', '🇻', '🇼', '🇽', '🇾', '🇿']
-    const args = msg.content.substring(1).split('%')
+    const args = msg.content.substring(1).split(client.prefix)
     args.shift()
     const Embed = new MessageEmbed()
       .setColor(client.color)

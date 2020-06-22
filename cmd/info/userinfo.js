@@ -17,7 +17,7 @@ module.exports = {
     const Embed = new MessageEmbed()
       .setThumbnail(member.user.displayAvatarURL({ format: 'png' }))
       .setColor(client.color)
-      .setTitle(`General Information of ${member.user.tag}`)
+      .setTitle(`Information of ${member.user.tag}`)
       .setDescription(
         `**\\> Username:** ${member.user.username}
         **\\> User ID:** ${member.user.id}
